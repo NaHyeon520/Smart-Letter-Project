@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- start = python camera_flask_app.py -->
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<title>프로젝트</title>
+</head>
+
+<style>
+	.CustomButto {
+		margin-top: 5px;
+		background-color: #6498db;
+		border: 2px solid #6498db;
+		border-radius: 12px;
+		color: white;
+		font-size: medium;
+		padding: 6px 10px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		/* font-size: 16px; */
+	}
+
+	.btn {
+		margin-top: 5px;
+		background-color: rgba(0, 118, 255, 0.9);
+		border: 2px solid rgba(0, 118, 255, 0.9);
+		/* border-radius: 12px; */
+		border-radius: 12px;
+		color: white;
+		/* border-color: rgb(110, 110, 110); */
+		font-size: small;
+		padding: 3px 15px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+		transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+	}
+
+	.file {}
+
+	.lan {
+
+		display: inline-block;
+		outline: 0;
+		cursor: pointer;
+		border: none;
+		padding: 5px 10px;
+		/* height: 45px; */
+		/* line-height: 45px; */
+		border-radius: 7px;
+		background-color: #6498db;
+		color: white;
+		/* font-weight: 400; */
+		font-size: 13px;
+		/* box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%); */
+		/* transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; */
+
+		:hover {
+			background: rgba(0, 118, 255, 0.9);
+			box-shadow: 0 6px 20px rgb(0 118 255 / 23%);
+		}
+
+	}
+
+	.mt-5 {
+		text-align: center;
+		margin-right: auto;
+		margin-left: 60vh;
+		font-size: 25px;
+		margin-bottom: 0;
+		margin-top: 5px;
+	}
+
+	.ButtonsContainer {
+		margin-top: 0.5rem;
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+
+	}
+
+	.Image-video {
+		max-height: 350px;
+	}
+
+	/* #image-show {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	} */
+
+	.fileloader {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-items: flex-start;
+	}
+
+	.title {
+		margin-bottom: 1rem;
+		font-size: 1.2rem;
+	}
+</style>
+
+<script>
+	function showImg(input) {
+		var file = input.files[0];//선택된 파일 가져오기
+
+		//이미지 div추가
+		var newImage = document.createElement("img");
+		newImage.setAttribute("class", 'img');
+
+		//이미지 소스 가져오기
+		newImage.src = URL.createObjectURL(file);
+
+		newImage.style.width = "70%";
+		newImage.style.height = "70%";
+		newImage.style.objectFit = "contain";
+		//이미지파일이 아닌경우 예외처리->이미 되어있음!
+
+		//이미지를 image-show div에 추가
+		var container = document.getElementById('image-show');
+		container.appendChild(newImage);
+		var prevImg = document.getElementById('image-show').firstElementChild;
+		prevImg.remove()
+
+		var newImage = document.getElementById('image-show').lastElementChild;
+		newImage.style.visibility = "visible";
+	}
+		/*function show_captured_img(){
+var newImage = document.getElementById('image-show').lastElementChild;
+newImage.style.visibility = "visible";
+}*/
+</script>
+
+
+<body>
+
+	<div class="header">
+		<div class="header__item"><button onclick="window.location='en' " class="lan">영어/English</button></div>
+
+		<!-- insert a logo here -->
+
+		<a class="header__item" href="#">사용법</a> <!-- link to about page -->
+		<h3 class="mt-5" style="font-family: 'Song Myung', serif;">E로 쓰는 편지</h3>
+
+	</div>
+	<!-- <div class="container" id="block_container"> -->
+	<div class="container">
+		<!-- <div class="row" id="block1"> -->
+		<div class="block1">
+			<!-- <div> -->
+			<!-- <div class="col-lg-8  offset-lg-2"> -->
+			<div class="title">손으로 쓴 편지를 여기에서 스캔해 주세요</div>
+			<div id="image-show"><img class="Image-video" src={{img}}></div>
+			<!--<div id="image"><img src="{{ url_for('static', filename=capimg) }}"	height="300px"></div>-->
+			<div class="ButtonsContainer">
+				<form method="post" action="http://127.0.0.1:4000/requests" class="button">
+					<button type="submit" class="CustomButton" value="Start" name="start">
+						<img src="/static/recordicon.svg" class="Icon" />
+						시작
+					</button>
+				</form>
+				<form method="post" action="http://127.0.0.1:4000/requests" class="button">
+					<button type="submit" class="CustomButton" value="Capture" name="click">
+						<img src="/static/cameraicon.svg" class="CameraIcon" />촬영
+					</button>
+				</form>
+				<form method="post" action="http://127.0.0.1:4000/requests" class="button">
+					<button type="submit" class="CustomButton" value="Grey" name="grey">
+						회색
+					</button>
+				</form>
+				<form method="post" action="http://127.0.0.1:4000/requests" class="button">
+					<button type="submit" class="CustomButton" value="OK" name="ok">
+						<img src="/static/checkicon.svg" class="CheckIcon" />
+						확인
+					</button>
+				</form>
+			</div>
+
+			<!-- <form method="post" action="http://127.0.0.1:4000/requests" class="button">
+				<input type="submit" class="CustomButto" value="Start" name="start" style="margin-left: 70px;">
+				<input type="submit" class="CustomButto" value="Capture" name="click" />
+				<input type="submit" class="CustomButto" value="Grey" name="grey" />
+				<input type="submit" class="CustomButto" value="OK" name="ok" />
+				<input type="file" id="uploadFile" value="Upload" name="upload" accept="img/*" onchange="showImg(this)">
+			</form> -->
+			<br />
+			<form class="fileloader" action="http://127.0.0.1:4000/uploader" method="post"
+				enctype="multipart/form-data">
+				<input type="file" name="file" accept="img/*" class="file" />
+				<input type="submit" value="제출" class="CustomButton" />
+			</form>
+
+		</div>
+		<div class="block2">
+			<div>
+				<div class="title">스캔한 정보</div>
+				<form action="http://127.0.0.1:4000/send_email" method="post" class="Form">
+					<!-- <div>
+						<label for="email">수신자:</label>
+						<input type="email" name="email" value="{{email}}" id="email">
+					</div> -->
+					<input class="Form__input" type="email" name="email" value="{{email}}" id="email"
+						placeholder="수신자:">
+					<!-- <div>
+						<label for="title"> 제목:</label>
+						<input type="text" name="title" value="{{title}}" id="title">
+					</div> -->
+					<input class="Form__input" type="text" name="title" value="{{title}}" id="title" placeholder="제목:">
+					<!-- <textarea name="text" id="text" rows="12" cols="35">{{text}}</textarea> -->
+					<textarea class="Form__textarea" name="text" id="text" rows="12" cols="35"
+						placeholder="스캔하는 텍스트">{{text}}</textarea>
+					<!-- ]<fieldset> -->
+					<div>
+						사진을 첨부하시겠습니까?
+						<input type="radio" id="attach-yes" name="attach" value="yes" checked>
+						<label for="attach-yes">예</label>
+						<input type="radio" id="attach-no" name="attach" value="no">
+						<label for="attach-no">아니요</label>
+					</div>
+					<!-- </fieldset> -->
+					<!-- <input type="submit" name="submit" value="보내기"></button> -->
+					<button class="CustomButton" type="submit" name="submit"><img src="/static/sendicon.svg"
+							class="Icon">보내기</button>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- importing fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+	<title>Project</title>
+</head>
+<style>
+	.CustomButto {
+		margin-top: 5px;
+		background-color: #6498db;
+		border: 2px solid #6498db;
+		border-radius: 10px;
+		color: white;
+		font-size: medium;
+		padding: 4px 10px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		/* font-size: 16px; */
+	}
+
+	.btn {
+		margin-top: 5px;
+		background-color: rgba(0, 118, 255, 0.9);
+		border: 2px solid rgba(0, 118, 255, 0.9);
+		/* border-radius: 12px; */
+		border-radius: 12px;
+		color: white;
+		/* border-color: rgb(110, 110, 110); */
+		font-size: small;
+		padding: 3px 15px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+		transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+	}
+
+	.file {
+		margin-left: 40px;
+	}
+
+	.lan {
+
+		display: inline-block;
+		outline: 0;
+		cursor: pointer;
+		border: none;
+		padding: 5px 10px;
+		/* height: 45px; */
+		/* line-height: 45px; */
+		border-radius: 7px;
+		background-color: #6498db;
+		color: white;
+		/* font-weight: 400; */
+		font-size: 13px;
+		/* box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%); */
+		/* transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; */
+
+		:hover {
+			background: rgba(0, 118, 255, 0.9);
+			box-shadow: 0 6px 20px rgb(0 118 255 / 23%);
+		}
+
+
+
+	}
+
+	.ButtonsContainer {
+		margin-top: 0.5rem;
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+
+	}
+
+	.mt-5 {
+		text-align: center;
+		margin-right: auto;
+		margin-left: 55vh;
+		font-size: 25px;
+		margin-bottom: 0;
+		margin-top: 5px;
+	}
+</style>
+<script>
+	function showImg(input) {
+		var file = input.files[0];//선택된 파일 가져오기
+
+		//이미지 div추가
+		var newImage = document.createElement("img");
+		newImage.setAttribute("class", 'img');
+
+		//이미지 소스 가져오기
+		newImage.src = URL.createObjectURL(file);
+
+		newImage.style.width = "70%";
+		newImage.style.height = "70%";
+		newImage.style.objectFit = "contain";
+		//이미지파일이 아닌경우 예외처리->이미 되어있음!
+
+		//이미지를 image-show div에 추가
+		var container = document.getElementById('image-show');
+		container.appendChild(newImage);
+		var prevImg = document.getElementById('image-show').firstElementChild;
+		prevImg.remove()
+
+		var newImage = document.getElementById('image-show').lastElementChild;
+		newImage.style.visibility = "visible";
+	}
+		/*function show_captured_img(){
+var newImage = document.getElementById('image-show').lastElementChild;
+newImage.style.visibility = "visible";
+}*/
+</script>
+
+<body>
+	<div class="header">
+		<div class="header__item"><button onclick="window.location='./'" class="lan">한국어/Korean</button></div>
+		<!-- insert a logo here -->
+		<a class="header__item" href="#">About</a> <!-- link to about page -->
+		<!-- <a class="header__item" href="#">Main</a> link to main page -->
+		<h3 class="mt-5" style="font-family: 'Song Myung', serif;">Write letter with E</h3>
+	</div>
+
+	<div class="container">
+
+		<div class="block1">
+			<div class="title">Scan handwritten letter</div>
+			<br />
+			<!-- <img src="http://127.0.0.1:4000/video_feed" height="300px"> -->
+			<div id="image-show"><img src={{img}} height="300px"></div>
+			<!-- <form method="post" action="http://127.0.0.1:4000/requests" class="buttons">
+				<button class="CustomButton" type="submit" name="stop"><img src="/static/recordicon.svg"
+						class="Icon">Record</button>
+				<button class="CustomButton" type="submit" name="click"><img src="/static/cameraicon.svg"
+						class="CameraIcon">Capture</button>
+						
+				<button class="CustomButton" type="submit" name="grey">Grey</button>
+			</form> -->
+			<div class="ButtonsContainer">
+				<form method="post" action="http://127.0.0.1:4000/request" class="button">
+					<button type="submit" class="CustomButton" value="Start" name="start">
+						<img src="/static/recordicon.svg" class="Icon" />
+						Start
+					</button>
+				</form>
+				<form method="post" action="http://127.0.0.1:4000/request" class="button">
+					<button type="submit" class="CustomButton" value="Capture" name="click">
+						<img src="/static/cameraicon.svg" class="CameraIcon" />Capture
+					</button>
+				</form>
+				<form method="post" action="http://127.0.0.1:4000/request" class="button">
+					<button type="submit" class="CustomButton" value="Grey" name="grey">
+						Grey
+					</button>
+				</form>
+				<form method="post" action="http://127.0.0.1:4000/request" class="button">
+					<button type="submit" class="CustomButton" value="OK" name="ok">
+						<img src="/static/checkicon.svg" class="CheckIcon" />
+						OK
+					</button>
+				</form>
+			</div>
+			<br />
+			<form action="http://127.0.0.1:4000/uploaderen" method="post" enctype="multipart/form-data">
+				<input type="file" name="file" accept="img/*" class="file" />
+				<input type="submit" value="Submit" class="btn" />
+			</form>
+		</div>
+
+		<div class="block2">
+			<div>
+				<div class="title">Scanned Information</div>
+				<br />
+
+				<form action="/send_email_en" method="post" class="Form">
+					<input class="Form__input" type="email" name="email" value="{{email}}" id="email"
+						placeholder="Email:">
+					<input class="Form__input" type="text" name="title" value="{{title}}" id="title"
+						placeholder="Title:">
+					<textarea class="Form__textarea" name="text" id="text" rows="12" cols="35"
+						placeholder="Here your email">{{text}}</textarea>
+
+					<div>
+						<label class="label" for="1">Would you like to attach a photo?</label>
+						<!--<input type="radio" name="1">예 <input type="radio" name="1">아니오-->
+						<input type="radio" id="attach-yes" name="attach" value="yes" checked>
+						<label for="attach-yes">Yes</label>
+						<input type="radio" id="attach-no" name="attach" value="no">
+						<label for="attach-no">No</label>
+					</div>
+
+					<button class="CustomButton" type="submit"><img src="/static/sendicon.svg"
+							class="Icon">Send</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
